@@ -1,0 +1,35 @@
+# Ẩn thư mục Visual Studio
+.vs/
+.idea/
+.vscode/
+
+# File biên dịch
+bin/
+obj/
+
+# File cấu hình môi trường
+appsettings*.json
+
+# Các thư viện cài đặt qua NuGet
+packages/
+*.nupkg
+project.lock.json
+
+# Các file log, debug
+*.log
+logs/
+
+# Thư mục chứa user-specific settings
+*.user
+*.suo
+*.cache
+
+# Ẩn frontend nếu có node_modules
+frontend/node_modules/
+frontend/.next/
+frontend/.nuxt/
+frontend/dist/
+
+# File hệ thống
+Thumbs.db
+.DS_Store
