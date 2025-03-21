@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "API.Controllers.HardwareController",
+    "Method": "GetHardwareInfo",
+    "RelativePath": "api/Hardware",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
