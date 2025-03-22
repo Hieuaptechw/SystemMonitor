@@ -9,7 +9,7 @@ namespace Application.Interfaces
 {
     public interface IProcessService
     {
-       
-        Task<List<ProcessInfo>> GetRunningProcessesAsync();
+
+        Task<List<ProcessInfo>> GetRunningApplicationsAsync();
     }
 }

@@ -7,24 +7,28 @@ using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Đăng ký dịch vụ phần cứng
+builder.Services.AddSingleton<IAppConfiguration, ConfigurationService>();
 builder.Services.AddScoped<IHardwareService, HardwareService>();
 
-// Thêm dịch vụ controller và Swagger UI
+// Đăng ký dịch vụ tiến trình
+builder.Services.AddScoped<IProcessService, ProcessService>();
+
+builder.Services.AddScoped<INetworkService, NetworkService>();
+builder.Services.AddScoped<LogService>();
 builder.Services.AddControllers();
+
+// Cấu hình Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Bật Swagger UI khi chạy ở môi trường Development
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseRouting();
+
 app.UseAuthorization();
 
 app.MapControllers();

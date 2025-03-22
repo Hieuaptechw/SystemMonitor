@@ -3,6 +3,7 @@ using Domain.Entity;
 using Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
@@ -19,43 +20,32 @@ namespace Infrastructure.Services
                 DeviceName = Environment.MachineName,
                 OSVersion = Environment.OSVersion.ToString(),
                 RecordedAt = DateTime.UtcNow,
-                CPUName = GetCPUName(),
-                CPUCores = Environment.ProcessorCount,
-                CPULogicalProcessors = GetCPULogicalProcessors(),
-                CPUSpeed = GetCPUSpeed(),
-                CPUTemperature = GetCpuTemperature(),
+                CPUUsed = GetCPUUsed(),
                 GPUs = GetGPUInfo(),
                 RAMTotal = GetTotalRAM(),
                 RAMUsed = GetUsedRAM(),
                 Disks = GetDiskInfo()
             });
         }
-
-        private string GetCPUName()
+        private static int GetCPUUsed()
         {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return "Unknown";
-            using var searcher = new ManagementObjectSearcher("SELECT Name FROM Win32_Processor");
-            return searcher.Get().Cast<ManagementObject>().FirstOrDefault()?["Name"]?.ToString() ?? "Unknown";
+            try
+            {
+        
+                  if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return 0;
+                    var cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+
+                _ = cpuCounter.NextValue();
+                Thread.Sleep(1000);
+                return (int)cpuCounter.NextValue();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting CPU Usage: " + ex.Message);
+                return -1; 
+            }
         }
 
-        private int GetCPULogicalProcessors()
-        {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return 0;
-            using var searcher = new ManagementObjectSearcher("SELECT NumberOfLogicalProcessors FROM Win32_Processor");
-            return Convert.ToInt32(searcher.Get().Cast<ManagementObject>().FirstOrDefault()?["NumberOfLogicalProcessors"] ?? 0);
-        }
-
-        private double GetCPUSpeed()
-        {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return 0;
-            using var searcher = new ManagementObjectSearcher("SELECT MaxClockSpeed FROM Win32_Processor");
-            return Convert.ToDouble(searcher.Get().Cast<ManagementObject>().FirstOrDefault()?["MaxClockSpeed"] ?? 0) / 1000.0;
-        }
-
-        public double GetCpuTemperature()
-        {
-            return CpuTemperatureHelper.GetCPUTemperature();
-        }
 
         private List<GPUInfo> GetGPUInfo()
         {
