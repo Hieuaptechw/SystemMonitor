@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Domain.Entity;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -14,7 +15,9 @@ namespace API.Controllers
         {
             _networkService = networkService;
         }
+        [Authorize]
         [HttpGet]
+ 
         public async Task<ActionResult<IEnumerable<NetworkInfo>>> GetNetworkInfo()
         {
             var network = await _networkService.GetNetworkInfoAsync();

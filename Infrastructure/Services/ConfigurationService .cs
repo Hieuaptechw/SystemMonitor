@@ -14,7 +14,7 @@ namespace Infrastructure.Services
         {
             _configCache = new Dictionary<string, string>();
 
-            // Lưu tất cả các giá trị cấu hình vào Dictionary khi service được khởi tạo
+          
             foreach (var section in configuration.AsEnumerable())
             {
                 if (!string.IsNullOrEmpty(section.Value))
@@ -23,7 +23,7 @@ namespace Infrastructure.Services
                 }
             }
 
-            // Lưu chuỗi kết nối mặc định
+         
             _defaultConnectionString = configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
         }
 

@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Domain.Entity;
 using Infrastructure.Helpers;
+using Infrastructure.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,11 +17,11 @@ namespace Infrastructure.Services
     public class NetworkService : INetworkService
     {
         private readonly IAppConfiguration _config;
-        private readonly LogService _logService;
-        public NetworkService(IAppConfiguration config, LogService logService)
+     
+        public NetworkService(IAppConfiguration config)
         {
             _config = config;
-            _logService = logService;
+          
         }
         public async Task<NetworkInfo> GetNetworkInfoAsync()
         {
@@ -40,13 +41,13 @@ namespace Infrastructure.Services
 
                 var logMessage = $"Network information retrieved successfully. IP Address: {ipAddress}, Open Ports: {string.Join(", ", openPorts)}, Databases: {string.Join(", ", databases.SelectMany(d => d.Value))}";
 
-                await _logService.LogInfo( logMessage);
+                await LogService.LogInfo( logMessage);
 
                 return networkInfo;
             }
             catch (Exception ex)
             {
-                await _logService.LogError($"Error retrieving network information: {ex.Message}");
+                await LogService.LogError($"Error retrieving network information: {ex.Message}");
                 throw;
             }
         }

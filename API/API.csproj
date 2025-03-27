@@ -8,6 +8,11 @@
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="8.0.0" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Content Update="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+	<ItemGroup>
   	  	<None Update="appsettings.json">
     			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   	  	</None>

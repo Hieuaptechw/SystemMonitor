@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -12,7 +13,10 @@ namespace API.Controllers
         {
             _hardwareService = hardwareService;
         }
+
+        [Authorize]
         [HttpGet]
+
         public async Task<IActionResult> GetHardwareInfo()
         {
             var hardwareInfo = await _hardwareService.GetHardwareInfoAsync();

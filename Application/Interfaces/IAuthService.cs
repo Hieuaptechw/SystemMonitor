@@ -8,6 +8,6 @@ namespace Application.Interfaces
 {
     public interface IAuthService
     {
-        Task<string> AuthenticateWithGoogleAsync(string token);
+        Task<object> AuthenticateWithGoogleAsync(string token);
     }
 }
