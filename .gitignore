@@ -8,7 +8,7 @@ bin/
 obj/
 
 # File cấu hình môi trường
-appsettings*.json
+
 
 # Các thư viện cài đặt qua NuGet
 packages/

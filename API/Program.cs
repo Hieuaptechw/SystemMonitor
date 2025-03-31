@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.SignalR;
 using API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
-
 var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
 
 builder.Services.AddCors(options =>
@@ -44,7 +43,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
 app.UseCors("AllowSpecificOrigin"); 
 
 app.UseRouting();
@@ -57,7 +55,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseRouting();
 app.MapHub<HardwareHub>("/hardwareHub").RequireAuthorization();
 app.MapHub<NetWorkHub>("/networkHub").RequireAuthorization();
 app.MapHub<ProcessHub>("/processHub").RequireAuthorization();
